@@ -5,6 +5,6 @@
 + 0-1背包问题，若求近似解，则使用贪心算法；若求最优解，则分别使用蛮力法、动态规划法及记忆功能改进的动态规划法求解，对于两种动态规划法，返回最终得到的动态规划表。  
 
 >算法具体功能设计流程如图:  
-![](https://github.com/Yuqunyi/Knapsack-problem/blob/main/image/picture1.png)
+![image](https://github.com/Yuqunyi/Knapsack-problem/blob/main/image/picture1.png)
 ## 2. 具体算法设计  
 + **贪心算法**  
