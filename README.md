@@ -145,21 +145,18 @@ def show(F,n,c):   #F为动态规划表
 
 + **0-1背包问题**
 
-1.贪心算法求其近似解，得到最大总价值为37，近似解为{物品1，物品2，物品4}。
+1、贪心算法求其近似解，得到最大总价值为37，近似解为{物品1，物品2，物品4}。
 
 <img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture5.png" width="400px">
 
-2.蛮力法、动态规划法、记忆功能改进的动态规划法求最优解，得到最优总价值为37，最优解为{物品1，物品2，物品4}。
+2、蛮力法、动态规划法、记忆功能改进的动态规划法求最优解，得到最优总价值为37，最优解为{物品1，物品2，物品4}。可以看出，动态规划表F1中每个单元格的值都进行了计算，在F2中，-1表示没有计算的值，即只计算了11个值，从而应用记忆功能改进后，动态规划法的效率得到了提高。
 
 <img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture6.png" width="400px">
-
-可以看出，动态规划表F1中每个单元格的值都进行了计算，在F2中，-1表示没有计算的值，即只计算了11个值，从而应用记忆功能改进后，动态规划法的效率得到了提高。  
-根据测试结果可以看出，对于该实例，用贪心算法得到的近似解与蛮力法等得到的最优解是一样的，即该近似解就是最优解，但该算法并不总是能够给出最优解，反例如下：
+  
+根据测试结果可以看出，对于该实例，用**贪心算法**得到的近似解与蛮力法等得到的最优解是一样的，即该近似解就是最优解，但该算法**并不总是能给出最优解**，反例如下：
 
 <img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture7.png" width="250px">
 
 利用贪心算法得到近似解为{物品1}，总价值为40；而利用蛮力法得到最优解为{物品2，物品3}，最优总价值为50，即该近似解不是最优解。
 
-<img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture8.png" width="400px">
-
-<img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture9.png" width="400px">
+<img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture8.png" width="400px">  <img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture9.png" width="400px">
