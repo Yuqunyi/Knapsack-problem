@@ -6,7 +6,7 @@
 
 >算法具体功能设计流程如图:
 
-<img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture1.png" width="500px">
+<img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture1.png" width="450px">
 
 ## 2. 具体算法设计  
 + **贪心算法**
@@ -84,5 +84,73 @@ def Brute(n,c):   #蛮力法求解0-1背包最优解
 ```
 + **动态规划法**
 
-动态规划算法求0-1背包问题最优解，初始化动态规划表，表中所有元素为0。单元格F(i,j)表示i个物品，承重量为j的背包的最优解的物品总价值，根据递推关系式：
-利用循环逐行填表，最后一个单元格的值F(n,c)即为所要求的的最大总价值，核心代码如下：
+动态规划算法求0-1背包问题最优解，初始化动态规划表，表中所有元素为0。单元格F(i,j)表示i个物品，承重量为j的背包最优解时的物品总价值，根据递推关系式：
+
+<img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture2.png" width="500px">
+
+利用循环逐行填表，最后一个单元格的值F(n,c)即为所要求的的最大总价值，函数设计如下：  
+```python
+def DP(n,c):   #动态规划法求解0-1背包问题最优解
+    for i in range(1,n+1):
+        for j in range(1,c+1):
+            if j-w[i-1] < 0:
+                F1[i][j] = F1[i-1][j]   #F1为初始化动态规划表，且为全局变量
+            else:
+                F1[i][j] = max(F1[i-1][j],F1[i-1][j-w[i-1]]+v[i-1])
+    return F1[n][c]   #最大总价值
+```
++ **记忆功能改进动态规划算法**
+
+该算法重点在于维护一个类似自底向上动态规划算法使用的表格，初始化动态规划表，表中第一行和第一列元素均为0，其他元素为-1，表明该单元格还没有被计算过。F(i,j)表示i个物品，承重量为j的背包最优解时的物品总价值。首先检查表中单元格的值是否小于0，若小于0，根据动态规划法的递推关系式使用递归调用进行计算，将返回的结果记录在表中，否则，直接返回单元格中的值。函数设计如下：  
+```python
+def MFK(i,j):   #记忆功能改进动态规划法
+    value = 0
+    if F2[i][j] < 0:    #F2为初始化动态规划表，且为全局变量
+        if j < w[i-1]:
+            value = MFK(i-1,j)
+        else:
+            value = max(MFK(i-1,j),v[i-1]+MFK(i-1,j-w[i-1]))
+        F2[i][j] = value  #注意缩进
+    return F2[i][j]
+```
++ **回溯表格单元求最优子集的组成元素**
+
+利用while循环及条件判断语句，从最后一个单元格开始，若F[i][j]>F[i-1][j],表明物品i以及F[i-1][j-w[i]]的一个最优子集包括在最优解中；否则，物品i不是最优子集的一部分，比较F[i-1][j]与F[i-2][j]，当回溯至背包剩余容量为0时，返回最优解。函数设计如下：  
+```python
+def show(F,n,c):   #F为动态规划表
+    global opt4
+    opt4 = [0]*n   #记录物品选择状态
+    i = n
+    j = c
+    while c > 0:
+        if F[i][j] > F[i-1][j]:
+            opt4[i-1] = 1
+            j -= w[i - 1]
+            c -= w[i - 1]
+            i -= 1
+        else:
+            i -= 1
+    return opt4
+```
+## 3. 项目测试  
+**考虑下列数据给出的实例：**
+
+<img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture3.png" width="250px">
+
++ **分数背包问题**
+
+通过贪心算法求得最优总价值为38.333，最优解为{物品2，物品3，物品4}，物品3只有2/3放入了背包。
+
+<img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture4.png" width="400px">
+
++ **0-1背包问题**
+
+1. 贪心算法求其近似解，得到最大总价值为37，近似解为{物品1，物品2，物品4}。
+
+<img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture5.png" width="400px">
+
+2. 蛮力法、动态规划法、记忆功能改进的动态规划法求最优解，得到最优总价值为37，最优解为{物品1，物品2，物品4}。
+
+<img src="https://raw.githubusercontent.com/Yuqunyi/Knapsack-problem/main/image/picture6.png" width="400px">
+
+可以看出，动态规划表F1中每个单元格的值都进行了计算，在F2中，-1表示没有计算的值，即只计算了11个值，从而应用记忆功能改进后，动态规划法的效率得到了提高。
